@@ -1,6 +1,14 @@
+import { Client } from 'pg';
+import dotenv from 'dotenv';
+dotenv.config();
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+});
+client.connect();
 export async function GET() {
-    try {
-        return new Response(JSON.stringify({ message: "GET DATA OK"}), {
+  try {
+        const result = await client.query('SELECT * FROM tbl_database');
+        return new Response(JSON.stringify(result.rows), {
             status: 200,
             headers: { "Content-Type": "application/json" },
           });
@@ -42,7 +50,7 @@ export async function PUT() {
 
 export async function DELETE() {
     try {
-        return new Response(JSON.stringify({ message: "DELETE DATA OK"}), {
+        return new Response(JSON.stringify({ message: "PUT DATA OK"}), {
             status: 200,
             headers: { "Content-Type": "application/json" },
           });
